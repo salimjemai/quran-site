@@ -1,0 +1,96 @@
+﻿@model PaginatedList<Edition>
+@using QuranApp.Infrastructure
+
+@{
+    ViewData["Title"] = "Quran";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Quran Edition</h1>
+
+    @{
+        if (@Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">EnglishName</th>
+                            <th scope="col">Identifier</th>
+                            <th scope="col">Format</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Language</th>
+                            <th scope="col">Direction</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var edition in @Model)
+                        {
+                            <tr>
+                                <td data-label="Name">
+                                    @Html.DisplayFor(modelItem => edition.Name)
+                                </td>
+
+                                <td data-label="EnglishName">
+                                    @Html.DisplayFor(modelItem => edition.EnglishName)
+                                </td>
+
+                                <td data-label="Identifier">
+                                    @Html.DisplayFor(modelItem => edition.Identifier)
+                                </td>
+
+                                <td data-label="Format">
+                                    @Html.DisplayFor(modelItem => edition.Format)
+                                </td>
+
+                                <td data-label="Type">
+                                    @Html.DisplayFor(modelItem => edition.Type)
+                                </td>
+
+                                <td data-label="Language">
+                                    @Html.DisplayFor(modelItem => edition.Language)
+                                </td>
+
+                                <td data-label="Direction">
+                                    @Html.DisplayFor(modelItem => edition.Direction)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @{
+                    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                }
+                <a asp-action="Edition"
+                   asp-route-pageNumber="@(@Model.TotalPages - @Model.TotalPages)"
+                   class="btn btn-default @prevDisabled">
+                    First
+                </a>
+                <a asp-action="Edition"
+                   asp-route-pageNumber="@(Model.PageIndex - 1)"
+                   class="btn btn-default @prevDisabled">
+                    Previous
+                </a>
+
+                @{
+                    var currentPage = Model.PageIndex+1;
+                    var lastPage = Model.TotalPages + 1;
+                }
+                <strong>@currentPage</strong>
+                <a asp-action="Edition"
+                   asp-route-pageNumber="@(Model.PageIndex + 1)"
+                   class="btn btn-default @nextDisabled">
+                    Next
+                </a>
+                <a asp-action="Edition"
+                   asp-route-pageNumber="@(Model.TotalPages-1)"
+                   class="btn btn-default @nextDisabled">
+                    Last
+                </a>
+            </div>
+
+        }
+    }
+</div>

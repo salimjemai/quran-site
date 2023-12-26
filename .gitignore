@@ -7,3 +7,9 @@
 /QuranApp/obj/Debug/net8.0/*.*
 /QuranApp/bin/Debug/net8.0/*.*
 /QuranApp/obj/Debug/net8.0/ref
+*.suo
+*.user
+bin/
+obj/
+Debug/
+Release/

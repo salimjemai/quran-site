@@ -3,3 +3,7 @@
 ################################################################################
 
 /.vs/QuranApp/FileContentIndex
+/.vs/QuranApp
+/QuranApp/obj/Debug/net8.0/*.*
+/QuranApp/bin/Debug/net8.0/*.*
+/QuranApp/obj/Debug/net8.0/ref

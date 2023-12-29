@@ -8,12 +8,20 @@
 <div class="text-center">
     <h1 class="display-4">The Holy Quran</h1>
     <p>Being developed, please be patient.</p>
-    
-    <div class="row edition-container">
+    @*     <div class="row edition-container">
         @using (Html.BeginForm("Edition", "Quran", FormMethod.Get))
         {
             <input type="submit" name="Get All quran editions" value="Quran Editions"/>
         }
+    </div> *@
+
+    <div class="row full-quran-container">
+        @using (Html.BeginForm("FullQuran", "Quran", FormMethod.Get))
+        {
+
+            <input type="submit" name="Arabic Quran" value="Full Quran"/>
+        }
     </div>
 </div>
+<script src="/Scripts/MyQuran.js"></script>
 

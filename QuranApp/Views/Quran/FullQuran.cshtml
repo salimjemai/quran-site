@@ -1,0 +1,150 @@
+﻿@model QuranApp.Infrastructure.PaginatedList<Ayahs>
+@using QuranApp.Models
+@using System.Reflection.Metadata
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Quran";
+}
+
+<head>
+    <style>
+        .suraHeaderFrame {
+            background: url(~/img/sura-frame.png) no-repeat center center;
+            margin: 5px 0px;
+            text-align: center;
+            font-family: hafs,"Times New Roman";
+            font-size: 20px;
+            line-height: 45px;
+            height: 49px
+        }
+
+        .suraHeaderFrame.ltr {
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 47px
+        }
+    </style>
+</head>
+
+
+<div class="main-tabs" align="center">
+    <h1>Full Quran in Arabic</h1>
+    <hr />
+    @{
+        if (@Model.Any())
+        {
+            var surahs = @Model;
+            <div class="quran quran-tab trans-tab" id="quran-tab" style="width: auto; height: auto;">
+                @{
+                    var surahNameList = ViewData["SurahList"] as List<Surahs>;
+                    var _pageNumber = (int)(ViewData["PageNumber"] ?? 0);
+                    var juzu = (int)(ViewData["JuzNumber"] ?? 0);
+                    string basmalah = "";
+                    var totalSurahPerPage = surahNameList?.Count();
+
+                    @if (surahNameList != null)
+                    {
+
+                        foreach (var surah in surahNameList)
+                        {
+                            <div class="qFrame qFrameMiddle " id="middleFrame">
+                                <div class="quranText" id="quranText" style="font-family: hafs; font-size: 1.15em; text-align: justify; direction: rtl;">
+                                    <div class="suraHeaderFrame rtl" >@surah.name</div>
+                                    @{
+
+                                        if (surah.number != 1)
+                                        {
+                                            basmalah = "ب\u0650س\u0652م\u0650 الل\u0651\u064eه\u0650 الر\u0651\u064eح\u0652م\u064e\u0670ن\u0650 الر\u0651\u064eح\u0650يم\u0650";
+                                        }
+                                        var ayahBasmalah = string.Empty;
+                                        if (@Model.First().numberInSurah > 1)
+                                        {
+                                            ayahBasmalah = null;
+                                        }
+                                        else
+                                        {
+                                            ayahBasmalah = basmalah;
+                                        }
+                                        <div class="ayaText bism">@ayahBasmalah</div>
+                                    }
+                                    @foreach (var ayah in @Model)
+                                    {
+                                        if (surah.number > 1)
+                                        {
+                                            //var indexOf = ayah.text.IndexOf("بسم ٱلله ٱلرحمن ٱلرحيم");
+                                            var indexOf = "ب\u0650س\u0652م\u0650 ٱلل\u0651\u064eه\u0650 ٱلر\u0651\u064eح\u0652م\u064e\u0670ن\u0650 ٱلر\u0651\u064eح\u0650يم\u0650";
+                                            var startsWith = ayah.text.StartsWith("ب\u0650س\u0652م\u0650 ٱلل\u0651\u064eه\u0650 ٱلر\u0651\u064eح\u0652م\u064e\u0670ن\u0650 ٱلر\u0651\u064eح\u0650يم\u0650");
+                                            if (startsWith)
+                                                ayah.text = ayah.text.Replace(indexOf, "");
+                                        }
+
+                                        if (surah.ayahs.Any(a => a.number == ayah.number))
+                                        {
+                                            string id = surah.number + "-" + ayah.numberInSurah;
+                                            <span id="@id" class="aya selected"> @ayah.text <span class="ayaNumber" style="font-size: 0.91em;">﴿@ayah.numberInSurah﴾</span></span>
+                                        }
+
+                                    }
+                                </div>
+                                <div class="transText" id="transText" style="display: none;">
+                                </div>
+                            </div>
+                            <div class="qFrame qFrameBottom">
+                            </div>
+                            <div align="center" style="margin: auto" class="quranPageFooter">
+                                @{
+                                    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                                    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                                }
+                                <a asp-action="FullQuran"
+                                   asp-route-pageNumber="@(Model.TotalPages-Model.TotalPages)"
+                                   class="btn btn-default @prevDisabled">
+                                    ◄◄
+                                </a>
+                                <a asp-action="FullQuran"
+                                   asp-route-pageNumber="@(Model.PageIndex - 1)"
+                                   class="btn btn-default @prevDisabled">
+                                    ◄
+                                </a>
+
+                                @{
+                                    var currentPage = (Model.PageIndex == 0 ? 1 : Model.PageIndex);
+                                }
+                                <strong>@currentPage</strong>
+                                <a asp-action="FullQuran"
+                                   asp-route-pageNumber="@(Model.PageIndex + 1)"
+                                   class="btn btn-default @nextDisabled">
+                                    ►
+                                </a>
+                                <a asp-action="FullQuran"
+                                   asp-route-pageNumber="@(Model.TotalPages)"
+                                   class="btn btn-default @nextDisabled">
+                                    ►►
+                                </a>
+                            </div>
+
+                            // <table class="table table-borderless">
+                            //     <thead>
+                            //         <h3 style="text-align: center">@Html.DisplayFor(modelItem => surah.name)</h3>
+                            //     </thead>
+
+                            //     <tbody>
+                            //         @foreach (var ayah in @Model)
+                            //         {
+                            //             if (@ayah != null)
+                            //             {
+                            //                 <tr>
+                            //                     <td data-labe="text" style="text-align: justify-all">(@ayah.numberInSurah) @Html.DisplayTextFor(a => @ayah.text)</td>
+                            //                 </tr>
+                            //             }
+                            //         }
+                            //     </tbody>
+                            // </table>
+                        }
+                    }
+                }
+
+        </div>
+        }
+    }
+</div>

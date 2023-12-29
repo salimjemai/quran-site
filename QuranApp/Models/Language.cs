@@ -1,7 +1,15 @@
 ﻿namespace QuranApp.Models
 {
-    public class Language
+    public enum Language
     {
+        English,
+        Arabic,
+        Amharic,
+        Azerbaijani,
+        French, 
+        German,
+        Greek,
+        Italian,
     }
 }
 
@@ -50,7 +58,7 @@
     "tt",
     "ug",
     "ur",
-    "uz"
+    "uz" Uzbek
   ]
 }
  */

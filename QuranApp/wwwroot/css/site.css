@@ -237,12 +237,19 @@ input[type="checkbox"], input[type="radio"] {
 }
 
 #footer-content {
-    background: #f8f7f4;
+    /*    background: #f8f7f4;
     border-top: silver 1px solid;
     border-bottom: silver 1px solid;
     padding: 4px;
     font: 10px Verdana;
-    text-align: center
+    text-align: center*/
+    color: #707070;
+    height: 2em;
+    position: relative;
+    /*changed to relative from fixed also works if position is not there */
+    font-size: small;
+    width: 100%;
+    text-align: center;
 }
 
 #top-content {
@@ -693,7 +700,7 @@ a.dbox-close {
 .dbox-footer {
     background: #f2f2f2;
     padding: 8px 10px 8px 10px;
-    text-align: right;
+    text-align: center;
     font-weight: bold;
     color: #333
 }
@@ -2004,7 +2011,12 @@ html {
 .search .footer {
     width: 100%;
     padding: 15px 0 25px;
-    text-align: center
+    text-align: center;
+    position: relative
+
+}
+.border-top footer text-muted {
+
 }
 
 .checkbox input {
@@ -2097,4 +2109,56 @@ html {
 
 .icon-check:before {
     content: '\004c'
+}
+
+
+@media screen and (max-width: 600px) {
+    table {
+        border: 0;
+    }
+
+    table caption {
+        font-size: 1.3em;
+    }
+
+    table thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    table tr {
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: .625em;
+    }
+
+    table td {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: .8em;
+        text-align: right;
+    }
+
+    table td::before {
+        
+        /*aria-label has no advantage, it won't be read inside a table*/
+        content: attr(aria-label);
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            table td:last-child {
+                border-bottom: 0;
+            }
+}
+.m-auto {
+    border-radius: 20px;
 }

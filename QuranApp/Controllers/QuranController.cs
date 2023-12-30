@@ -8,7 +8,6 @@ using System.Security;
 using QuranApp.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using PagedList;
 using QuranApp.ViewModels;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -28,8 +27,8 @@ namespace QuranApp.Controllers
 
         public IActionResult Index()
         {
-            return View();
-            //return RedirectToAction("FullQuran");
+            //return View();
+            return RedirectToAction("FullQuran");
         }
 
         [HttpGet]

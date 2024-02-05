@@ -39,7 +39,8 @@ namespace QuranApp.Controllers
             ViewData["EditionList"] = editions;
             pageNumber ??= 0;
             const int pageSize = 15;
-            return View(new PaginatedList<Edition>(editions.AsQueryable(), pageNumber ?? 1, pageSize));
+            var toRender = new PaginatedList<Edition>(editions.AsQueryable(), pageNumber ?? 1, pageSize);
+            return View(toRender);
         }
 
         [HttpGet]
